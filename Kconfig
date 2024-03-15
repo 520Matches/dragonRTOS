@@ -1,0 +1,21 @@
+mainmenu "dragonRTOS Configuation"
+
+menu "General"
+	config ARCH
+		string "arch"
+		default "riscv"
+
+	config TOOL_CHAIN
+		string "tool chain path"
+
+	# source "arch/Kconfig"
+
+	menu "Stack/Heap"
+		config STACK_LEN
+		int "stack_len"
+		default 4096
+	
+	endmenu
+endmenu
+
+

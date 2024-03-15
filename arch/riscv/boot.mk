@@ -1,0 +1,5 @@
+
+menuconfig:
+	menuconfig
+
+clean:
