@@ -1,5 +1,1 @@
 
-menuconfig:
-	menuconfig
-
-clean:

@@ -8,14 +8,7 @@ menu "General"
 	config TOOL_CHAIN
 		string "tool chain path"
 
-	# source "arch/Kconfig"
-
-	menu "Stack/Heap"
-		config STACK_LEN
-		int "stack_len"
-		default 4096
-	
-	endmenu
+	source "arch/Kconfig"
 endmenu
 
 

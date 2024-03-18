@@ -1,2 +1,5 @@
-
-
+menu "Stack/Heap"
+	config STACK_LEN
+	int "stack_len"
+	default 4096
+endmenu
