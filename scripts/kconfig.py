@@ -31,8 +31,8 @@ def generate_config(kconfig_file,config_in, config_out, header_out):
         content = content.replace("#define CONFIG_", "#define ")
 
         # Add the micro
-        header_file.write("#ifndef _CONFIG_H_\n") 
-        header_file.write("#define _CONFIG_H_\n\n")
+        header_file.write("#ifndef __CONFIG_H\n") 
+        header_file.write("#define __CONFIG_H\n\n")
 
         header_file.write("#ifdef __cplusplus\n")
         header_file.write("extern \"C\" {\n") 
