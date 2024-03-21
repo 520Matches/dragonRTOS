@@ -45,7 +45,7 @@ def generate_config(kconfig_file,config_in, config_out, header_out):
         header_file.write("\n#ifdef __cplusplus\n")
         header_file.write("}\n")
         header_file.write("#endif /* __cplusplus */\n\n")
-        header_file.write("#endif /* _CONFIG_H_*/\n")
+        header_file.write("#endif /* __CONFIG_H*/\n")
 
 def main():
     kconfig_file = 'Kconfig' 

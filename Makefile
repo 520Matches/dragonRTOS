@@ -1,6 +1,6 @@
-CUR_DIR := $(shell pwd)
+OBJ_DIR := $(shell pwd)
 
-CROSS_COMPILE ?= ~/software/riscv64/bin/riscv64-unknown-linux-gnu-
+CROSS_COMPILE ?= riscv32-unknown-elf-
 ARCHS := arm arm64 riscv
 
 ARCH ?= riscv
@@ -11,20 +11,21 @@ AR  := $(CROSS_COMPILE)ar
 NM  := $(CROSS_COMPILE)nm
 
 
-BOOT_DIR := $(CUR_DIR)/arch/$(ARCH)/boot
+ARCH_DIR := $(OBJ_DIR)/arch/$(ARCH)
 
 CFLAGS         := -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
 CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 CFLAGS_RELEASE := $(CFLAGS)
 
-all: dragon.img
-	make -C $(BOOT_DIR)
+BUILD_DIR := $(OBJ_DIR)/build
+
+all: dragon.elf
 
 menuconfig:
 	menuconfig
-	python3 $(CUR_DIR)/scripts/kconfig.py
+	python3 $(OBJ_DIR)/scripts/kconfig.py
 
 
-include $(CUR_DIR)/arch/arch.mk
+include $(OBJ_DIR)/arch/arch.mk
 
 clean:

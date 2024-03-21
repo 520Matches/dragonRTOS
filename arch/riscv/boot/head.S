@@ -10,8 +10,7 @@ _start:
 	/* TODO */
 
 	/* init stack */
-	li t0, STACK_LEN
-	la sp, t0
+	la sp, STACK_LEN
 
 	/* goto C */
 	/* tail main */
