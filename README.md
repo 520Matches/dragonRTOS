@@ -7,3 +7,9 @@
 ```shell
 pip3 install kconfiglib
 ```
+## Build
+```shell
+make menuconfig
+make -j$(nproc)
+```
+

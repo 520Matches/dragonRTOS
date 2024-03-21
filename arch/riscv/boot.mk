@@ -1,11 +1,17 @@
 BOOT_DIR := $(ARCH_DIR)/boot
 
-dragon.elf: head.o 
-	$(LD) -T $(BOOT_DIR)/boot_linker.ld -o $@ $(BOOT_DIR)/$^
+BOOT-O := head.o
+BOOT-O += boot.o
+
+dragon.elf: $(BOOT-O)
+	$(LD) -T $(BOOT_DIR)/boot_linker.ld -o $@ $^
 
 head.o: $(BOOT_DIR)/head.S
 	$(GCC) -c $<
-	mv head.o $(BOOT_DIR)/
+
+boot.o: $(BOOT_DIR)/boot.c
+	$(GCC) -c $<
+
 
 bootclean:
 	rm -rf $(BOOT_DIR)/*.o
