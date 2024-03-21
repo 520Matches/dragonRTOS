@@ -6,3 +6,6 @@ dragon.elf: head.o
 head.o: $(BOOT_DIR)/head.S
 	$(GCC) -c $<
 	mv head.o $(BOOT_DIR)/
+
+bootclean:
+	rm -rf $(BOOT_DIR)/*.o

@@ -28,4 +28,6 @@ menuconfig:
 
 include $(OBJ_DIR)/arch/arch.mk
 
-clean:
+clean: bootclean
+	rm -rf $(OBJ_DIR)/dragon.elf
+
