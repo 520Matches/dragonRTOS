@@ -12,12 +12,14 @@ void bss_clear(void)
 	}
 }
 
-int main(void)
-{
-	int ret = 0;
 
+void start_kernel(void)
+{
 	// clear bss
 	bss_clear();
 
-	return ret;
+	// init interrupt
+
+	// goto app_main
+	// app_main();
 }

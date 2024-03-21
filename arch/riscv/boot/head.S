@@ -13,5 +13,5 @@ _start:
 	la sp, STACK_LEN
 
 	/* goto C */
-	/* tail main */
+	tail start_kernel
 
