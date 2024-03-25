@@ -3,14 +3,14 @@ BOOT_DIR := $(ARCH_DIR)/boot
 C-FILES := $(wildcard $(BOOT_DIR)/*.c)
 ASM-FILES := $(wildcard $(BOOT_DIR)/*.S)
 
-# FILES-O := $(subst .c,.o,$(C-FILES))
-# FILES-O += $(subst .S,.o,$(ASM-FILES))
+# BOOT-OBJS := $(subst .c,.o,$(C-FILES))
+# BOOT-OBJS += $(subst .S,.o,$(ASM-FILES))
 
-FILES-O := 
-FILES-O += head.o
-FILES-O += boot.o
+BOOT-OBJS := 
+BOOT-OBJS += head.o
+BOOT-OBJS += boot.o
 
-dragon.elf: $(FILES-O)
+dragon.elf: $(BOOT-OBJS)
 	$(LD) -T $(BOOT_DIR)/boot_linker.ld -o $@ $^
 
 head.o: $(BOOT_DIR)/head.S

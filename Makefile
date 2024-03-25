@@ -18,13 +18,13 @@ CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 CFLAGS_RELEASE := $(CFLAGS)
 
 BUILD_DIR := $(OBJ_DIR)/build
+SCRIPTS_DIR := $(OBJ_DIR)/scripts
 
 all: dragon.elf
 
 menuconfig:
 	menuconfig
-	python3 $(OBJ_DIR)/scripts/kconfig.py
-
+	python3 $(SCRIPTS_DIR)/kconfig.py
 
 include $(OBJ_DIR)/arch/arch.mk
 
