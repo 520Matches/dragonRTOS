@@ -29,6 +29,7 @@ menuconfig:
 include $(OBJ_DIR)/arch/arch.mk
 
 clean: bootclean
+	rm -rf $(OBJ_DIR)/dragon_config.h
 	rm -rf $(OBJ_DIR)/*.o
 	rm -rf $(OBJ_DIR)/dragon.elf
 

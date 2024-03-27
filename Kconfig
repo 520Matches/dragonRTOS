@@ -9,6 +9,8 @@ menu "General"
 		string "tool chain path"
 
 	source "arch/Kconfig"
+
+	source "platform/Kconfig"
 endmenu
 
 

@@ -1,0 +1,4 @@
+menu "Platform"
+	config DTB_ADDR
+	hex "dtb address space"
+endmenu
