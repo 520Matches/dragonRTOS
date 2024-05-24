@@ -1,1 +1,1 @@
-source "arch/riscv/Kconfig"
+source "arch/riscv32/Kconfig"
