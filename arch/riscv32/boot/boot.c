@@ -1,4 +1,4 @@
-#include "../../../include/types.h"
+#include <types.h>
 
 extern uint32_t _bss_begin;
 extern uint32_t _bss_end;

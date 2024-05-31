@@ -15,7 +15,7 @@ ARCH_DIR := $(OBJ_DIR)/arch/$(ARCH)
 
 INC := -I ./include/
 
-CFLAGS         := -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
+CFLAGS         := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
 CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 CFLAGS_RELEASE := $(CFLAGS)
 
