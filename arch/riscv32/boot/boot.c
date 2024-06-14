@@ -1,3 +1,4 @@
+#include <dragon_config.h>
 #include <types.h>
 
 extern uint32_t _bss_begin;
@@ -12,6 +13,10 @@ void bss_clear(void)
 	}
 }
 
+void get_app_start_addr(void)
+{
+	uint32_t *app_start_addr = (uint32_t *)(BOOT_START_ADDR + BOOT_LEN);
+}
 
 void start_kernel(void)
 {

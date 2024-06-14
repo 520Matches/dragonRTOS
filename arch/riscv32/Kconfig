@@ -1,5 +1,13 @@
-menu "Stack/Heap"
+menu "BootConfig"
 	config STACK_LEN
 	int "stack_len"
 	default 4096
+
+	config BOOT_START_ADDR
+	hex "boot_start_addr"
+	default 0x00000000
+
+	config BOOT_LEN
+	hex "boot_len"
+	default 0x2000
 endmenu
