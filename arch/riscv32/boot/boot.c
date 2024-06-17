@@ -13,18 +13,13 @@ void bss_clear(void)
 	}
 }
 
-void get_app_start_addr(void)
-{
-	uint32_t *app_start_addr = (uint32_t *)(BOOT_START_ADDR + BOOT_LEN);
-}
-
-void start_kernel(void)
+void boot_main(void)
 {
 	// clear bss
 	bss_clear();
 
 	// init interrupt
 
-	// goto app_main
+	// goto kernel
 	// app_main();
 }

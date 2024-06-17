@@ -10,8 +10,9 @@ BOOT-OBJS :=
 BOOT-OBJS += head.o
 BOOT-OBJS += boot.o
 
-dragon.elf: $(BOOT-OBJS)
+dragon_boot.elf: $(BOOT-OBJS)
 	$(LD) -T $(BOOT_DIR)/boot_linker.ld -o $@ $^
+	mv *.o $(BUILD_DIR)
 
 head.o: $(BOOT_DIR)/head.S
 	$(GCC) -c $<

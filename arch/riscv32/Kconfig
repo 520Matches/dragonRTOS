@@ -10,4 +10,8 @@ menu "BootConfig"
 	config BOOT_LEN
 	hex "boot_len"
 	default 0x2000
+
+	config KERNEL_START_ADDR
+	hex "kernel_start_addr"
+	default 0x00002000
 endmenu

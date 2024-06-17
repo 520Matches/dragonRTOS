@@ -19,7 +19,7 @@ _start:
 	la sp, STACK_LEN
 
 	/* goto C */
-	tail start_kernel
+	tail boot_main
 
 
 /* reset all registers */
