@@ -4,6 +4,11 @@
 extern uint32_t _bss_begin;
 extern uint32_t _bss_end;
 
+#define enable_irq() do{asm volatile ("csrw sie, 1");}while(0);
+#define disable_irq() do{asm volatile ("csrw sie, zero");}while(0);
+
+typedef void (*entry)(void);
+
 void bss_clear(void)
 {
 	uint32_t *p;
@@ -15,11 +20,15 @@ void bss_clear(void)
 
 void boot_main(void)
 {
+	entry kernel;
+
 	// clear bss
 	bss_clear();
 
 	// init interrupt
+	enable_irq();
 
 	// goto kernel
-	// app_main();
+	kernel = (entry)KERNEL_START_ADDR;	
+	kernel();
 }

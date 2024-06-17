@@ -24,7 +24,7 @@ SCRIPTS_DIR := $(OBJ_DIR)/scripts
 
 dragon_boot: dragon_boot.elf
 
-all: dragon.elf
+all: dragon_boot.elf
 
 menuconfig:
 	menuconfig
