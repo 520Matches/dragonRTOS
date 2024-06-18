@@ -5,10 +5,11 @@ ARCHS := arm32 arm64 riscv32 riscv64
 
 ARCH ?= riscv32
 
-GCC := $(CROSS_COMPILE)gcc
-LD  := $(CROSS_COMPILE)ld
-AR  := $(CROSS_COMPILE)ar
-NM  := $(CROSS_COMPILE)nm
+GCC     := $(CROSS_COMPILE)gcc
+LD      := $(CROSS_COMPILE)ld
+AR      := $(CROSS_COMPILE)ar
+NM      := $(CROSS_COMPILE)nm
+OBJCOPY := $(CROSS_COMPILE)objcopy
 
 ARCH_DIR := $(OBJ_DIR)/arch/$(ARCH)
 BUILD_DIR := $(OBJ_DIR)/build
@@ -28,12 +29,24 @@ BUILD_DIR   := $(OBJ_DIR)/build
 SCRIPTS_DIR := $(OBJ_DIR)/scripts
 KERNEL_DIR  := $(OBJ_DIR)/kernel
 
+TARGET := dragon.bin
 
-dragon_boot   : dragon_boot.elf
-dragon_kernel : dragon_kernel.elf
-dragon_app    : dragon_app.elf
+all: dragon_boot.bin dragon_kernel.bin
+	rm -rf dragon.bin
+	# create zero bin
+	dd if=/dev/zero of=dragon.bin bs=1k count=40
+	# create 0xFF bin
+	# tr '\000' '\377' < /dev/zero | dd of=dragon.bin bs=1k count=40 > /dev/null
+	# dd if=/dev/zero bs=1k count=40 | tr '\000' '\377' > dragon.bin
+	cat dragon_boot.bin > dragon.bin
+	cat dragon_kernel.bin | dd bs=1k seek=8 conv=notrunc of=dragon.bin
 
-all: dragon_boot.elf dragon_kernel.elf
+dragon_boot.bin   : dragon_boot.elf
+	$(OBJCOPY) -O binary $< $@
+dragon_kernel.bin : dragon_kernel.elf
+	$(OBJCOPY) -O binary $< $@
+dragon_app.bin    : dragon_app.elf
+
 
 menuconfig:
 	menuconfig
@@ -47,8 +60,8 @@ include $(OBJ_DIR)/kernel/kernel.mk
 clean: bootclean kernelclean
 	rm -rf $(BUILD_DIR)/*.o
 	rm -rf $(BUILD_DIR)/*.map
-	rm -rf $(OBJ_DIR)/dragon_boot.elf
-	rm -rf $(OBJ_DIR)/dragon_kernel.elf
+	rm -rf $(OBJ_DIR)/*.elf
+	rm -rf $(OBJ_DIR)/*.bin
 
 disclean: clean
 	rm -rf $(OBJ_DIR)/include/dragon_config.h
