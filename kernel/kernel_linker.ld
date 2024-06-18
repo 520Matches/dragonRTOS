@@ -1,6 +1,7 @@
 SECTIONS
 {
 	. = 0x8022000,
+	start_kernel = .;
 
 	. = ALIGN(8);
 	.text : {*(.text)}
