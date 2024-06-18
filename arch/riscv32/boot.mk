@@ -18,7 +18,7 @@ head.o: $(BOOT_DIR)/head.S
 	$(GCC) -c $<
 
 boot.o: $(BOOT_DIR)/boot.c
-	$(GCC) -c $(CFLAGS) $<
+	$(GCC) -c $(BOOT_CFLAGS) $<
 
 bootclean:
 	rm -rf $(BOOT_DIR)/*.o

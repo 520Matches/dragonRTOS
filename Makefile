@@ -15,18 +15,22 @@ BUILD_DIR := $(OBJ_DIR)/build
 
 INC := -I ./include/ 
 
-CFLAGS         := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
-CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
-CFLAGS_RELEASE := $(CFLAGS) -O2
+# CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
+# CFLAGS_RELEASE := $(CFLAGS) -O2
+
+BOOT_CFLAGS   := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
+KERNEL_CFLAGS := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
+APP_CFLAGS    := $(INC) -Wall
 
 BUILD_DIR   := $(OBJ_DIR)/build
 SCRIPTS_DIR := $(OBJ_DIR)/scripts
+KERNEL_DIR  := $(OBJ_DIR)/kernel
 
 dragon_boot   : dragon_boot.elf
 dragon_kernel : dragon_kernel.elf
 dragon_app    : dragon_app.elf
 
-all: dragon_boot.elf
+all: dragon_boot.elf dragon_kernel.elf
 
 menuconfig:
 	menuconfig
@@ -34,9 +38,14 @@ menuconfig:
 	mv dragon_config.h ./include
 
 include $(OBJ_DIR)/arch/arch.mk
+include $(OBJ_DIR)/kernel/kernel.mk
+
 
 clean: bootclean
-	rm -rf $(OBJ_DIR)/include/dragon_config.h
 	rm -rf $(BUILD_DIR)/*.o
 	rm -rf $(OBJ_DIR)/dragon_boot.elf
+	rm -rf $(OBJ_DIR)/dragon_kernel.elf
+
+disclean: clean
+	rm -rf $(OBJ_DIR)/include/dragon_config.h
 
