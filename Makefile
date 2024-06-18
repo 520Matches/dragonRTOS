@@ -11,8 +11,15 @@ AR      := $(CROSS_COMPILE)ar
 NM      := $(CROSS_COMPILE)nm
 OBJCOPY := $(CROSS_COMPILE)objcopy
 
-ARCH_DIR := $(OBJ_DIR)/arch/$(ARCH)
-BUILD_DIR := $(OBJ_DIR)/build
+ARCH_DIR    := $(OBJ_DIR)/arch/$(ARCH)
+BUILD_DIR   := $(OBJ_DIR)/build
+SCRIPTS_DIR := $(OBJ_DIR)/scripts
+KERNEL_DIR  := $(OBJ_DIR)/kernel
+
+# boot size is 8k,kernel size is 32k,dragon size is boot add kernel
+BOOT_SIZE   := 8
+KERNEL_SIZE := 32
+DRAGON_SIZE := 40
 
 INC := -I ./include/ 
 
@@ -21,32 +28,27 @@ INC := -I ./include/
 
 MAP_FLAGS := -Map
 
-BOOT_CFLAGS   := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
-KERNEL_CFLAGS := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
+BOOT_CFLAGS   := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -O0 -g
+KERNEL_CFLAGS := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -O2 -g
 APP_CFLAGS    := $(INC) -Wall
-
-BUILD_DIR   := $(OBJ_DIR)/build
-SCRIPTS_DIR := $(OBJ_DIR)/scripts
-KERNEL_DIR  := $(OBJ_DIR)/kernel
 
 TARGET := dragon.bin
 
 all: dragon_boot.bin dragon_kernel.bin
 	rm -rf dragon.bin
-	# create zero bin
-	dd if=/dev/zero of=dragon.bin bs=1k count=40
-	# create 0xFF bin
-	# tr '\000' '\377' < /dev/zero | dd of=dragon.bin bs=1k count=40 > /dev/null
-	# dd if=/dev/zero bs=1k count=40 | tr '\000' '\377' > dragon.bin
-	cat dragon_boot.bin > dragon.bin
-	cat dragon_kernel.bin | dd bs=1k seek=8 conv=notrunc of=dragon.bin
+	@# create zero bin
+	dd if=/dev/zero of=$(TARGET) bs=1k count=$(DRAGON_SIZE)
+	@# create 0xFF bin
+	@# tr '\000' '\377' < /dev/zero | dd of=$(TARGET) bs=1k count=40 > /dev/null
+	@# dd if=/dev/zero bs=1k count=40 | tr '\000' '\377' > $(TARGET)
+	cat dragon_boot.bin > $(TARGET)
+	cat dragon_kernel.bin | dd bs=1k seek=$(BOOT_SIZE) conv=notrunc of=$(TARGET)
 
 dragon_boot.bin   : dragon_boot.elf
 	$(OBJCOPY) -O binary $< $@
 dragon_kernel.bin : dragon_kernel.elf
 	$(OBJCOPY) -O binary $< $@
 dragon_app.bin    : dragon_app.elf
-
 
 menuconfig:
 	menuconfig
@@ -55,7 +57,6 @@ menuconfig:
 
 include $(OBJ_DIR)/arch/arch.mk
 include $(OBJ_DIR)/kernel/kernel.mk
-
 
 clean: bootclean kernelclean
 	rm -rf $(BUILD_DIR)/*.o
