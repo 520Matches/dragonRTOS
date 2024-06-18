@@ -11,8 +11,9 @@ BOOT-OBJS += head.o
 BOOT-OBJS += boot.o
 
 dragon_boot.elf: $(BOOT-OBJS)
-	$(LD) -T $(BOOT_DIR)/boot_linker.ld -o $@ $^
+	$(LD) $(MAP_FLAGS) boot.map -T $(BOOT_DIR)/boot_linker.ld -o $@ $^
 	mv *.o $(BUILD_DIR)
+	mv *.map $(BUILD_DIR)
 
 head.o: $(BOOT_DIR)/head.S
 	$(GCC) -c $<

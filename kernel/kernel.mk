@@ -4,8 +4,9 @@ KERNEL-OBJS :=
 KERNEL-OBJS += kernel.o
 
 dragon_kernel.elf: $(KERNEL-OBJS)
-	$(LD) -T $(KERNEL_DIR)/kernel_linker.ld -o $@ $^
+	$(LD) $(MAP_FLAGS) kernel.map -T $(KERNEL_DIR)/kernel_linker.ld -o $@ $^
 	mv *.o $(BUILD_DIR)
+	mv *.map $(BUILD_DIR)
 
 kernel.o: $(KERNEL_DIR)/kernel.c
 	$(GCC) -c $(CFLAGS) $<

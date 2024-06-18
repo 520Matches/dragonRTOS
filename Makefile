@@ -18,6 +18,8 @@ INC := -I ./include/
 # CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 # CFLAGS_RELEASE := $(CFLAGS) -O2
 
+MAP_FLAGS := -Map
+
 BOOT_CFLAGS   := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
 KERNEL_CFLAGS := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs
 APP_CFLAGS    := $(INC) -Wall
@@ -25,6 +27,7 @@ APP_CFLAGS    := $(INC) -Wall
 BUILD_DIR   := $(OBJ_DIR)/build
 SCRIPTS_DIR := $(OBJ_DIR)/scripts
 KERNEL_DIR  := $(OBJ_DIR)/kernel
+
 
 dragon_boot   : dragon_boot.elf
 dragon_kernel : dragon_kernel.elf
@@ -41,8 +44,9 @@ include $(OBJ_DIR)/arch/arch.mk
 include $(OBJ_DIR)/kernel/kernel.mk
 
 
-clean: bootclean
+clean: bootclean kernelclean
 	rm -rf $(BUILD_DIR)/*.o
+	rm -rf $(BUILD_DIR)/*.map
 	rm -rf $(OBJ_DIR)/dragon_boot.elf
 	rm -rf $(OBJ_DIR)/dragon_kernel.elf
 
