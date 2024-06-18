@@ -19,10 +19,12 @@ CFLAGS         := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-prote
 CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 CFLAGS_RELEASE := $(CFLAGS) -O2
 
-BUILD_DIR := $(OBJ_DIR)/build
+BUILD_DIR   := $(OBJ_DIR)/build
 SCRIPTS_DIR := $(OBJ_DIR)/scripts
 
-dragon_boot: dragon_boot.elf
+dragon_boot   : dragon_boot.elf
+dragon_kernel : dragon_kernel.elf
+dragon_app    : dragon_app.elf
 
 all: dragon_boot.elf
 

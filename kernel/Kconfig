@@ -1,0 +1,5 @@
+menu "KernelConfig"
+	config KERNEL_START_ADDR
+	hex "kernel start address"
+	default 0x00002000
+endmenu

@@ -10,6 +10,8 @@ menu "General"
 
 	source "arch/Kconfig"
 
+	source "kernel/Kconfig"
+
 	source "platform/Kconfig"
 endmenu
 
