@@ -9,7 +9,7 @@ dragon_kernel.elf: $(KERNEL-OBJS)
 	mv *.map $(BUILD_DIR)
 
 kernel.o: $(KERNEL_DIR)/kernel.c
-	$(GCC) -c $(CFLAGS) $<
+	$(GCC) -c $(KERNEL_CFLAGS) $<
 
 kernelclean:
 	rm -rf $(KERNEL_DIR)/*.o

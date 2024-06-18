@@ -1,5 +1,5 @@
-#ifndef __TYPES_H
-#define __TYPES_H
+#ifndef __DRAGON_TYPES_H
+#define __DRAGON_TYPES_H
 
 #ifndef NULL
 #define NULL ((void*)0)
