@@ -1,6 +1,6 @@
 SECTIONS
 {
-	. = 0x8022000,
+	. = 0x80002000,
 	start_kernel = .;
 
 	. = ALIGN(8);

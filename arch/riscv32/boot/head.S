@@ -1,5 +1,7 @@
 #define STACK_LEN	(4096)
 
+.section ".text.boot"
+
 .global _start
 
 _start:
@@ -19,7 +21,7 @@ _start:
 	la sp, STACK_LEN
 
 	/* goto C */
-	tail boot_main
+	jal boot_main
 
 
 /* reset all registers */

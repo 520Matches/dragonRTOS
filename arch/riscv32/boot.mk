@@ -16,7 +16,7 @@ dragon_boot.elf: $(BOOT-OBJS)
 	mv *.map $(BUILD_DIR)
 
 head.o: $(BOOT_DIR)/head.S
-	$(GCC) -c $<
+	$(GCC) -c $(BOOT_CFLAGS) $<
 
 boot.o: $(BOOT_DIR)/boot.c
 	$(GCC) -c $(BOOT_CFLAGS) $<
