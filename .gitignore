@@ -1,2 +1,4 @@
 .config
 ./scripts/dtc
+.gdb_history
+.config.old
