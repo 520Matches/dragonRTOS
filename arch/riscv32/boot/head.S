@@ -15,13 +15,16 @@ _start:
 	/* TODO */
 
 	/* reset all registers except ra, a0, a1 */
-	call reset_regs
+	/* call reset_regs */
 
 	/* init stack */
-	la sp, STACK_LEN
+	la sp, stacks_start
+	li t0, STACK_LEN
+	add sp, sp, t0
+	/* la sp, STACK_LEN */
 
 	/* goto C */
-	jal boot_main
+	tail boot_main
 
 
 /* reset all registers */
@@ -54,3 +57,8 @@ reset_regs:
 	li	t4, 0
 	li	t5, 0
 	li	t6, 0
+
+.section .data
+.global stacks_start
+stacks_start:
+	.skip 4096

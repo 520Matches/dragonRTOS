@@ -6,7 +6,7 @@ extern uint32_t _kernel_bss_end;
 void kernel_bss_clear(void)
 {
 	uint32_t *p;
-	for(p = &_kernel_bss_begin; p < &_kernel_bss_end;)
+	for(p = &_kernel_bss_begin; p <= &_kernel_bss_end;)
 	{
 		*p++ = 0;
 	}
@@ -14,6 +14,8 @@ void kernel_bss_clear(void)
 
 void start_kernel(void)
 {
+	// set interrupt vector table
+	
 	// clear bss
 	kernel_bss_clear();
 }

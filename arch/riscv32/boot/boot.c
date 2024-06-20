@@ -11,11 +11,17 @@ typedef void (*entry)(void);
 
 void boot_bss_clear(void)
 {
-	uint32_t *p;
-	for(p = &_boot_bss_begin; p < &_boot_bss_end;)
+	uint32_t *begin = &_boot_bss_begin;
+	uint32_t *end = &_boot_bss_end;
+	while(begin <= end)
 	{
-		*p++ = 0;
+		*begin++ = 0;
 	}
+	// uint32_t *p;
+	// for(p = &_boot_bss_begin; p <= &_boot_bss_end;)
+	// {
+	// 	*p++ = 0;
+	// }
 }
 
 void boot_main(void)
