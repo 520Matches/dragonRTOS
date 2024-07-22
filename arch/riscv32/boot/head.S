@@ -21,7 +21,17 @@ _start:
 	la sp, stacks_start
 	li t0, STACK_LEN
 	add sp, sp, t0
-	/* la sp, STACK_LEN */
+
+	/* enable all interrupts */	
+	csrw sie, 1
+
+	/* make S mode */
+	csrr t0, mstatus
+	li t1, 0x0C00
+	or t0, t0, t1
+	li t1, 0xF7FF
+	and t0, t0, t1
+	csrw mstatus, t0
 
 	/* goto C */
 	tail boot_main

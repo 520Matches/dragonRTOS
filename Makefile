@@ -64,6 +64,6 @@ clean: bootclean kernelclean
 	rm -rf $(OBJ_DIR)/*.elf
 	rm -rf $(OBJ_DIR)/*.bin
 
-disclean: clean
+distclean: clean
 	rm -rf $(OBJ_DIR)/include/dragon_config.h
 
