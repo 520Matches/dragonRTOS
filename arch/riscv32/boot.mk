@@ -12,6 +12,7 @@ BOOT-OBJS += boot.o
 
 dragon_boot.elf: $(BOOT-OBJS)
 	$(LD) $(MAP_FLAGS) boot.map -T $(BOOT_DIR)/boot_linker.ld -o $@ $^
+	$(OBJDUMP) -d $@ > dragon_boot.asm
 	mv *.o $(BUILD_DIR)
 	mv *.map $(BUILD_DIR)
 

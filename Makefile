@@ -10,6 +10,7 @@ LD      := $(CROSS_COMPILE)ld
 AR      := $(CROSS_COMPILE)ar
 NM      := $(CROSS_COMPILE)nm
 OBJCOPY := $(CROSS_COMPILE)objcopy
+OBJDUMP	:= $(CROSS_COMPILE)objdump
 
 ARCH_DIR    := $(OBJ_DIR)/arch/$(ARCH)
 BUILD_DIR   := $(OBJ_DIR)/build
@@ -46,8 +47,10 @@ all: dragon_boot.bin dragon_kernel.bin
 
 dragon_boot.bin   : dragon_boot.elf
 	$(OBJCOPY) -O binary $< $@
+	mv *.asm $(BUILD_DIR)
 dragon_kernel.bin : dragon_kernel.elf
 	$(OBJCOPY) -O binary $< $@
+	mv *.asm $(BUILD_DIR)
 dragon_app.bin    : dragon_app.elf
 
 menuconfig:
@@ -61,6 +64,7 @@ include $(OBJ_DIR)/kernel/kernel.mk
 clean: bootclean kernelclean
 	rm -rf $(BUILD_DIR)/*.o
 	rm -rf $(BUILD_DIR)/*.map
+	rm -rf $(BUILD_DIR)/*.asm
 	rm -rf $(OBJ_DIR)/*.elf
 	rm -rf $(OBJ_DIR)/*.bin
 
