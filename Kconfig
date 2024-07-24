@@ -2,8 +2,10 @@ mainmenu "dragonRTOS Configuation"
 
 menu "General"
 	config ARCH
-		string "arch"
-		default "riscv"
+		int "arch"
+		default 1
+		help 
+			riscv32 = 1, riscv64 = 2, arm32 = 3, arm64 = 4
 
 	config TOOL_CHAIN
 		string "tool chain path"
