@@ -12,6 +12,11 @@
 #define MSTATUS_MPP	(3UL << MSTATUS_MPP_SHIFT)
 #define MSTATUS_MPIE	0x00000080UL
 
+#define SSTATUS_SPP_SHIFT	8
+#define SSTATUS_SPP	(1UL << SSTATUS_SPP_SHIFT)
+#define SSTATUS_SPIE	0x00000020UL
+
+
 /*
  * 在带参数的宏，#号作为一个预处理运算符,
  * 可以把记号转换成字符串

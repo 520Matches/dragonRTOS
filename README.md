@@ -42,3 +42,10 @@ c
 ```
 
 ### debug app
+
+
+## Default Memory Map
+|        | start address | length   |
+| boot   | 0x80000000    | 0x2000   |
+| kernel | 0x80002000    | 0x2000   |
+| app    | 0x80004000    | undefine |
