@@ -2,11 +2,13 @@
 #include <irq.h>
 #include <register.h>
 #include <attributes.h>
+#include <archs.h>
 
 extern uint32_t _kernel_bss_begin;
 extern uint32_t _kernel_bss_end;
 
 extern void trap_entry(void);
+extern void app_main(void);
 
 typedef void (*interrupt_func)(void);
 
@@ -43,14 +45,15 @@ __NO_OPTIMIZE void start_kernel(void)
 	// clear bss
 	kernel_bss_clear();
 
+#if(ARCH == ARCH_RISCV32)
 	val = read_csr(sstatus);
 	//SPP=1 is S Mode, SPP=0 is U Mode
-	val = INSERT_FIELD(val, SSTATUS_SPP, 1);
+	val = INSERT_FIELD(val, SSTATUS_SPP, 0);
 	val = INSERT_FIELD(val, SSTATUS_SPIE, 0);
 	write_csr(sstatus, val);
 
 	/* 设置S模式的Exception Program Counter，用于sret跳转 */
-	write_csr(sepc, trap_entry);
+	write_csr(sepc, APP_START_ADDR);
 	/* 设置U模式异常向量表入口*/
 	write_csr(stvec, trap_entry);
 
@@ -60,6 +63,7 @@ __NO_OPTIMIZE void start_kernel(void)
 	CPU会跳转到sepc寄存器指向的那条指令，然后继续执行 */
 	// goto trap_entry
 	asm volatile("sret");
+#endif
 
 	// enable_irq();
 }

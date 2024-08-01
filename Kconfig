@@ -11,10 +11,9 @@ menu "General"
 		string "tool chain path"
 
 	source "arch/Kconfig"
-
 	source "kernel/Kconfig"
-
 	source "platform/Kconfig"
+	source "apps/Kconfig"
 endmenu
 
 

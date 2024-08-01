@@ -37,16 +37,27 @@ qemu-system-riscv32 -nographic -machine virt -bios dragon_boot.bin -kernel drago
 ```shell
 riscv32-unknown-elf-gdb dragon_kernel.elf
 target remote localhost:1234
-b _start
+b start_kernel
 c
 ```
 
 ### debug app
+- open first terminal
+```shell
+qemu-system-riscv32 -nographic -machine virt -bios dragon_kernel.bin -kernel dragon_app.elf -s -S 
+```
+- open second terminal
+```shell
+riscv32-unknown-elf-gdb dragon_app.elf
+target remote localhost:1234
+b app_main
+c
+```
 
 
 ## Default Memory Map
 |        | start address | length   |
-| ------ | ------------- | ------   |
+| :----: | :-----------: | :----:   |
 | boot   | 0x80000000    | 0x2000   |
 | kernel | 0x80002000    | 0x2000   |
 | app    | 0x80004000    | undefine |

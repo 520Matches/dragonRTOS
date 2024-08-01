@@ -1,0 +1,7 @@
+menu "App"
+	config APP_START_ADDR
+	hex "app start address"
+	default 0x80004000
+	help
+		'this app start address is linker script address, they should be same'
+endmenu
