@@ -8,4 +8,10 @@
 #define ARCH_ARM32		3
 #define ARCH_ARM64		4
 
+#if(ARCH == ARCH_RISCV32)
+	#define POINT_LEN	(1 << 2)
+#else
+	#define POINT_LEN	(1 << 2)
+#endif
+
 #endif

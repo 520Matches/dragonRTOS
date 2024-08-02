@@ -1,6 +1,8 @@
 ## what is dragonRTOS
 - dragonRTOS is a configuration operation similar to Linux rtos
 ## Environmental Construction 
+### Install riscv32-unknown-elf- tool chain
+### Install qemu-system-riscv32
 ### Install python3
 ### Install pip3
 ### Install kconfiglib
