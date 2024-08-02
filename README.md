@@ -46,7 +46,7 @@ c
 ### debug app
 - open first terminal
 ```shell
-qemu-system-riscv32 -nographic -machine virt -bios dragon_kernel.bin -kernel dragon_app.elf -s -S 
+qemu-system-riscv32 -nographic -machine virt -bios dragon_kernel_debug.bin -kernel dragon_app.elf -s -S 
 ```
 - open second terminal
 ```shell

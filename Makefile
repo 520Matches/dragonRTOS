@@ -36,17 +36,21 @@ BOOT_CFLAGS   := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protec
 KERNEL_CFLAGS := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -O2 -g
 APP_CFLAGS    := $(INC) -Wall -fno-builtin -fno-stack-protector -nostartfiles -O2 -g
 
+define check_dragon_config
+	ifeq($(wildcard $(OBJ_DIR)/include/dragon_config.h),)
+		@echo "Please do 'make menuconfig' to create dragon_config.h"
+	endif
+endef
+
 TARGET := dragon.bin
 
 all: dragon_boot.bin dragon_app.bin dragon_kernel.bin
-	rm -rf dragon.bin
+	rm -rf $(TARGET)
 	@# create zero bin
 	dd if=/dev/zero of=$(TARGET) bs=1k count=$(DRAGON_SIZE)
-	@# create 0xFF bin
-	@# tr '\000' '\377' < /dev/zero | dd of=$(TARGET) bs=1k count=40 > /dev/null
-	@# dd if=/dev/zero bs=1k count=40 | tr '\000' '\377' > $(TARGET)
 	cat dragon_boot.bin > $(TARGET)
 	cat dragon_kernel.bin | dd bs=1k seek=$(BOOT_SIZE) conv=notrunc of=$(TARGET)
+	cp $(TARGET) dragon_kernel_debug.bin
 	cat dragon_app.bin | dd bs=1k seek=$(KERNEL_SIZE) conv=notrunc of=$(TARGET)
 
 dragon_boot.bin   : dragon_boot.elf

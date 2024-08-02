@@ -61,7 +61,7 @@ __NO_OPTIMIZE void start_kernel(void)
 	/* 执行完sret,CPU会做以下动作
 	CPU会将当前的特权级按照sstatus上的SPP字段来设置为U或者S
 	CPU会跳转到sepc寄存器指向的那条指令，然后继续执行 */
-	// goto trap_entry
+	// goto APP_START_ADDR
 	asm volatile("sret");
 #endif
 
