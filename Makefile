@@ -23,7 +23,8 @@ BOOT_SIZE   := 8
 KERNEL_SIZE := 16
 APP_SIZE    :=
 
-DRAGON_SIZE := 40
+KERNEL_APP_SIZE := 24
+DRAGON_SIZE     := 40
 
 INC := -I ./include/ 
 
@@ -36,13 +37,18 @@ BOOT_CFLAGS   := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protec
 KERNEL_CFLAGS := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -O2 -g
 APP_CFLAGS    := $(INC) -Wall -fno-builtin -fno-stack-protector -nostartfiles -O2 -g
 
+OBJDUMP_FLAGS := -D -S
+
 define check_dragon_config
 	ifeq($(wildcard $(OBJ_DIR)/include/dragon_config.h),)
 		@echo "Please do 'make menuconfig' to create dragon_config.h"
 	endif
 endef
 
-TARGET := dragon.bin
+TARGET       := dragon.bin
+TARGET_DEBUG := dragon.elf
+
+OBJS-O := $(wildcard $(BUILD_DIR)/*.o)
 
 all: dragon_boot.bin dragon_app.bin dragon_kernel.bin
 	rm -rf $(TARGET)
@@ -56,10 +62,10 @@ all: dragon_boot.bin dragon_app.bin dragon_kernel.bin
 dragon_boot.bin   : dragon_boot.elf
 	$(OBJCOPY) -O binary $< $@
 	mv *.asm $(BUILD_DIR)
-dragon_app.bin    : dragon_app.elf
+dragon_kernel.bin : dragon_kernel.elf
 	$(OBJCOPY) -O binary $< $@
 	mv *.asm $(BUILD_DIR)
-dragon_kernel.bin : dragon_kernel.elf
+dragon_app.bin    : dragon_app.elf
 	$(OBJCOPY) -O binary $< $@
 	mv *.asm $(BUILD_DIR)
 

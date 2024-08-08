@@ -53,16 +53,19 @@ void boot_main(void)
 	/* 设置M模式的Exception Program Counter，用于mret跳转 */
 	write_csr(mepc, KERNEL_START_ADDR);
 	/* 设置S模式异常向量表入口*/
-	write_csr(stvec, KERNEL_START_ADDR);
+	write_csr(mtvec, KERNEL_START_ADDR);
+	// write_csr(mtvec, 0x80001000);
 	/* 关闭S模式的中断*/
 	// write_csr(sie, 0);
 	/* 关闭S模式的页表转换 */
 	write_csr(satp, 0);
 
+	// 把中断和异常委托给S模式，在U模式下产生中断和异常的时候能够让S模式来处理
+	// 在有S模式的情况下需要设置mideleg(中断委托寄存器)和medeleg(异常委托寄存器)
+	write_csr(mideleg, 0xFFFF);
+	write_csr(medeleg, 0xFFFF);
+
 	/* 切换到S模式 */
 	// goto kernel KERNEL_START_ADDR
 	asm volatile("mret");
-	// goto kernel
-	// kernel = (entry)KERNEL_START_ADDR;	
-	// kernel();
 }

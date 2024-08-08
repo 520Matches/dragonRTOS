@@ -25,16 +25,6 @@ _start:
 	/* enable all interrupts */	
 	csrw sie, 1
 
-	/* make S mode */
-	/*
-	csrr t0, mstatus
-	li t1, 0x0C00
-	or t0, t0, t1
-	li t1, 0xF7FF
-	and t0, t0, t1
-	csrw mstatus, t0
-	*/
-
 	/* goto C */
 	tail boot_main
 
@@ -69,8 +59,9 @@ reset_regs:
 	li	t4, 0
 	li	t5, 0
 	li	t6, 0
+	ret
 
 .section .data
 .global stacks_start
 stacks_start:
-	.skip 4096
+	.skip 1024

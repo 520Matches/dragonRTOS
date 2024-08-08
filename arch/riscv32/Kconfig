@@ -1,7 +1,7 @@
 menu "BootConfig"
 	config STACK_LEN
 	int "stack length"
-	default 4096
+	default 1024
 
 	config BOOT_START_ADDR
 	hex "boot start address"
@@ -9,5 +9,5 @@ menu "BootConfig"
 
 	config BOOT_LEN
 	hex "boot length"
-	default 0x2000
+	default 0x1000
 endmenu

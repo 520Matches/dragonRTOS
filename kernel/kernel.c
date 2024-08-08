@@ -4,6 +4,8 @@
 #include <attributes.h>
 #include <archs.h>
 
+#define __AT_KERNEL_ADDR __attribute__ ((__section__(".ARM.__at_0x80002000")))
+
 extern uint32_t _kernel_bss_begin;
 extern uint32_t _kernel_bss_end;
 
@@ -29,6 +31,19 @@ typedef void (*interrupt_func)(void);
 	NULL,
 }; */
 
+void test_main(void)
+{
+	/*
+	在U模式执行ecall指令后：
+	从U模式切换到S模式
+	把当前指令地址保存到sepc寄存器
+	设置scause寄存器
+	跳转到stvec寄存器保存的地址
+	*/
+	asm volatile("ecall");
+	while(1);
+}
+
 void kernel_bss_clear(void)
 {
 	uint32_t *p;
@@ -40,12 +55,15 @@ void kernel_bss_clear(void)
 
 __NO_OPTIMIZE void start_kernel(void)
 {
+#if(ARCH == ARCH_RISCV32)
 	uint32_t val = 0;
-	// disable_irq();
+	/* init kernel stack */
+	/* kernel end in 0x4000 */
+	asm volatile("la sp, 0x80004000");
+
 	// clear bss
 	kernel_bss_clear();
 
-#if(ARCH == ARCH_RISCV32)
 	val = read_csr(sstatus);
 	//SPP=1 is S Mode, SPP=0 is U Mode
 	val = INSERT_FIELD(val, SSTATUS_SPP, 0);
@@ -53,8 +71,11 @@ __NO_OPTIMIZE void start_kernel(void)
 	write_csr(sstatus, val);
 
 	/* 设置S模式的Exception Program Counter，用于sret跳转 */
-	write_csr(sepc, APP_START_ADDR);
+	write_csr(sepc, test_main);
+	// write_csr(sepc, APP_START_ADDR);
 	/* 设置U模式异常向量表入口*/
+	// trap_entry的地址在链接脚本的0x80001000
+	// write_csr(stvec, 0x80001000);
 	write_csr(stvec, trap_entry);
 
 	/* 切换到U模式 */
@@ -64,6 +85,5 @@ __NO_OPTIMIZE void start_kernel(void)
 	// goto APP_START_ADDR
 	asm volatile("sret");
 #endif
-
-	// enable_irq();
 }
+
