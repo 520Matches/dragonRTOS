@@ -1,0 +1,10 @@
+choice
+	prompt "MCU"
+	help
+		"select one mcu"
+
+	config QEMU_VIR32
+	bool "qemu_vir32"
+	config QEMU_VIR_TEST
+	bool "qemu_vir_test"
+endchoice

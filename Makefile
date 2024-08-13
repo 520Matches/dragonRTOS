@@ -4,6 +4,7 @@ CROSS_COMPILE ?= riscv32-unknown-elf-
 ARCHS := arm32 arm64 riscv32 riscv64
 
 ARCH ?= riscv32
+MCU  ?= qemu_vir32
 
 GCC     := $(CROSS_COMPILE)gcc
 LD      := $(CROSS_COMPILE)ld
@@ -16,7 +17,8 @@ ARCH_DIR    := $(OBJ_DIR)/arch/$(ARCH)
 BUILD_DIR   := $(OBJ_DIR)/build
 SCRIPTS_DIR := $(OBJ_DIR)/scripts
 KERNEL_DIR  := $(OBJ_DIR)/kernel
-APPS_DIR     := $(OBJ_DIR)/apps
+MCU_DIR  	:= $(OBJ_DIR)/mcu/$(ARCH)/$(MCU)
+APPS_DIR    := $(OBJ_DIR)/apps
 
 # boot size is 8k,kernel size is (16-8)k,dragon size is boot add kernel
 BOOT_SIZE   := 8
@@ -26,7 +28,7 @@ APP_SIZE    :=
 KERNEL_APP_SIZE := 24
 DRAGON_SIZE     := 40
 
-INC := -I ./include/ 
+INC := -I ./include/ -I ./kernel/ -I ./platform/
 
 # CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 # CFLAGS_RELEASE := $(CFLAGS) -O2
@@ -77,6 +79,7 @@ menuconfig:
 include $(OBJ_DIR)/arch/arch.mk
 include $(OBJ_DIR)/apps/apps.mk
 include $(OBJ_DIR)/kernel/kernel.mk
+include $(OBJ_DIR)/mcu/mcu.mk
 
 clean: bootclean kernelclean
 	rm -rf $(BUILD_DIR)/*.o
