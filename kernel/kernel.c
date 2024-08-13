@@ -33,6 +33,7 @@ typedef void (*interrupt_func)(void);
 
 void test_main(void)
 {
+	asm volatile("la sp, 0x80008000");
 	/*
 	在U模式执行ecall指令后：
 	从U模式切换到S模式
@@ -78,6 +79,7 @@ __NO_OPTIMIZE void start_kernel(void)
 	// write_csr(stvec, 0x80001000);
 	write_csr(stvec, trap_entry);
 
+	asm volatile("csrw sscratch, sp");
 	/* 切换到U模式 */
 	/* 执行完sret,CPU会做以下动作
 	CPU会将当前的特权级按照sstatus上的SPP字段来设置为U或者S
