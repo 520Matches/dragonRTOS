@@ -4,6 +4,9 @@
 #include <attributes.h>
 #include <archs.h>
 
+
+#include <uart.h>
+
 #define __AT_KERNEL_ADDR __attribute__ ((__section__(".ARM.__at_0x80002000")))
 
 extern uint32_t _kernel_bss_begin;
@@ -34,6 +37,7 @@ typedef void (*interrupt_func)(void);
 void test_main(void)
 {
 	asm volatile("la sp, 0x80008000");
+
 	/*
 	在U模式执行ecall指令后：
 	从U模式切换到S模式
@@ -72,8 +76,8 @@ __NO_OPTIMIZE void start_kernel(void)
 	write_csr(sstatus, val);
 
 	/* 设置S模式的Exception Program Counter，用于sret跳转 */
-	write_csr(sepc, test_main);
-	// write_csr(sepc, APP_START_ADDR);
+	// write_csr(sepc, test_main);
+	write_csr(sepc, APP_START_ADDR);
 	/* 设置U模式异常向量表入口*/
 	// trap_entry的地址在链接脚本的0x80001000
 	// write_csr(stvec, 0x80001000);

@@ -28,7 +28,7 @@ APP_SIZE    :=
 KERNEL_APP_SIZE := 24
 DRAGON_SIZE     := 40
 
-INC := -I ./include/ -I ./kernel/ -I ./platform/
+INC := -I ./include/ -I ./kernel/ -I ./platform/ -I ./common/
 
 # CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 # CFLAGS_RELEASE := $(CFLAGS) -O2
@@ -37,7 +37,7 @@ MAP_FLAGS := -Map
 
 BOOT_CFLAGS   := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -O0 -g
 KERNEL_CFLAGS := $(INC) -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -O2 -g
-APP_CFLAGS    := $(INC) -Wall -fno-builtin -fno-stack-protector -nostartfiles -O2 -g
+APP_CFLAGS    := $(INC) -Wall -fno-builtin -fno-stack-protector -nostartfiles -lc -O2 -g
 
 OBJDUMP_FLAGS := -D -S
 
@@ -77,9 +77,10 @@ menuconfig:
 	mv dragon_config.h ./include
 
 include $(OBJ_DIR)/arch/arch.mk
-include $(OBJ_DIR)/apps/apps.mk
 include $(OBJ_DIR)/kernel/kernel.mk
 include $(OBJ_DIR)/mcu/mcu.mk
+
+include $(OBJ_DIR)/apps/apps.mk
 
 clean: bootclean kernelclean
 	rm -rf $(BUILD_DIR)/*.o

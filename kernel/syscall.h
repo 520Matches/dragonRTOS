@@ -3,17 +3,17 @@
 
 #include <dragon_types.h>
 
-int (*dragon_write)(uint8_t *data, uint32_t size);
-int (*dragon_read)(uint8_t *data, uint32_t size, uint32_t timeout);
-int (*dragon_open)(void *dev);
-int (*dragon_close)(void *dev);
+typedef int (*dragon_write)(void *handle, uint8_t *data, uint32_t size);
+typedef int (*dragon_read)(void *handle, uint8_t *data, uint32_t size, uint32_t timeout);
+typedef int (*dragon_open)(void *handle);
+typedef int (*dragon_close)(void *handle);
 
 typedef struct
 {
-	dragon_write syscall_write;
-	dragon_read syscall_read;
-	dragon_open syscall_open;
-	dragon_close syscall_close;
+	dragon_write write;
+	dragon_read read;
+	dragon_open open;
+	dragon_close close;
 }syscall_t;
 
 #endif

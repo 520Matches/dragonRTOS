@@ -1,6 +1,10 @@
 #ifndef __ARCHS_H
 #define __ARCHS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 #include <dragon_config.h>
 
 #define ARCH_RISCV32	1
@@ -13,5 +17,9 @@
 #else
 	#define POINT_LEN	(1 << 2)
 #endif
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif
