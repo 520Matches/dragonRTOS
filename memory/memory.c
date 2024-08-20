@@ -1,13 +1,13 @@
 #include <dragon_config.h>
 #include <dragon_memory.h>
 
-#define HEAP_START	((&_app_bss_begin)++)
-#define HEAP_END	(APP_START_ADDR + APP_LEN - APP_STACK_LEN)
+#define HEAP_START	(&_app_bss_end)
+#define HEAP_END	(APP_START_ADDR + APP_LEN - APP_MAIN_STACK_LEN)
 
 // 内存申请的时候4字节对齐
 #define MEM_ALIGN	(4)
 
-extern uint32_t _app_bss_begin;
+extern uint32_t _app_bss_end;
 
 
 static uint32_t *heap_start = NULL;
@@ -16,13 +16,9 @@ static uint32_t heap_len = 0;
 
 void mem_init(void)
 {
-	// uint32_t *p;
-	// for(p = HEAP_START; p <= HEAP_END;)
-	// {
-	// 	*p++ = 0;
-	// }
 	heap_start = HEAP_START;
-	heap_len = HEAP_END - HEAP_START;
+	heap_start++;
+	heap_len = HEAP_END - (uint32_t)heap_start;
 }
 
 void* memalloc(uint32_t size)
