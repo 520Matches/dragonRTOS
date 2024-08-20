@@ -17,6 +17,7 @@ ARCH_DIR    := $(OBJ_DIR)/arch/$(ARCH)
 BUILD_DIR   := $(OBJ_DIR)/build
 SCRIPTS_DIR := $(OBJ_DIR)/scripts
 KERNEL_DIR  := $(OBJ_DIR)/kernel
+MEMORY_DIR  := $(OBJ_DIR)/memory
 MCU_DIR  	:= $(OBJ_DIR)/mcu/$(ARCH)/$(MCU)
 APPS_DIR    := $(OBJ_DIR)/apps
 
@@ -28,7 +29,7 @@ APP_SIZE    :=
 KERNEL_APP_SIZE := 24
 DRAGON_SIZE     := 40
 
-INC := -I ./include/ -I ./kernel/ -I ./platform/ -I ./common/
+INC := -I ./include/ -I ./kernel/ -I ./platform/ -I ./common/ -I ./memory/
 
 # CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 # CFLAGS_RELEASE := $(CFLAGS) -O2
@@ -79,6 +80,7 @@ menuconfig:
 include $(OBJ_DIR)/arch/arch.mk
 include $(OBJ_DIR)/kernel/kernel.mk
 include $(OBJ_DIR)/mcu/mcu.mk
+include $(OBJ_DIR)/memory/mem.mk
 
 include $(OBJ_DIR)/apps/apps.mk
 

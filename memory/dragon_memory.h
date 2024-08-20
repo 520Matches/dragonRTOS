@@ -33,4 +33,9 @@
     void *__mptr = (void *)(ptr);                   \
     ((type *)(__mptr - offsetof(type, member))); })
 
+
+
+void mem_init(void);
+void* memalloc(uint32_t size);
+
 #endif

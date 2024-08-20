@@ -2,6 +2,12 @@ menu "App"
 	config APP_START_ADDR
 	hex "app start address"
 	default 0x80004000
-	help
-		'this app start address is linker script address, they should be same'
+
+	config APP_LEN
+	hex "app length"
+	default 0x2000
+
+	config APP_MAIN_STACK_LEN
+	hex "app length"
+	default 0x400
 endmenu

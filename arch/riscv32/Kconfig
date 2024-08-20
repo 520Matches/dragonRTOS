@@ -1,8 +1,4 @@
 menu "BootConfig"
-	config STACK_LEN
-	int "stack length"
-	default 1024
-
 	config BOOT_START_ADDR
 	hex "boot start address"
 	default 0x00000000
