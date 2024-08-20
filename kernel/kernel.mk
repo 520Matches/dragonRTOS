@@ -4,8 +4,6 @@ KERNEL-OBJS :=
 KERNEL-OBJS += kernel.o
 KERNEL-OBJS += interrupt.o
 KERNEL-OBJS += interrupts.o
-KERNEL-OBJS += task.o
-
 
 dragon_kernel.elf: $(KERNEL-OBJS)
 	$(LD) $(MAP_FLAGS) kernel.map -T $(KERNEL_DIR)/kernel_linker.ld -o $@ $^
@@ -20,9 +18,6 @@ interrupt.o: $(KERNEL_DIR)/interrupt.S
 	$(GCC) -c $(BOOT_CFLAGS) $<
 
 interrupts.o: $(KERNEL_DIR)/interrupts.c
-	$(GCC) -c $(KERNEL_CFLAGS) $<
-
-task.o: $(KERNEL_DIR)/task.c
 	$(GCC) -c $(KERNEL_CFLAGS) $<
 
 kernelclean:
