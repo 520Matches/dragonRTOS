@@ -8,7 +8,7 @@ SECTIONS
 	.rodata : {*(.rodata)}
 	.data : {*(.data)}
 
-	_kernel_bss_begin = .;
+	_core_bss_begin = .;
 	.bss : {*(.bss*)}
-	_kernel_bss_end = .;
+	_core_bss_end = .;
 }

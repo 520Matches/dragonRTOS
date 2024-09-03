@@ -1,13 +1,13 @@
 #include <dragon_config.h>
 #include <dragon_memory.h>
 
-#define HEAP_START	(&_app_bss_end)
+#define HEAP_START	(&_core_bss_end)
 #define HEAP_END	(APP_START_ADDR + APP_LEN - APP_MAIN_STACK_LEN)
 
 // 内存申请的时候4字节对齐
 #define MEM_ALIGN	(4)
 
-extern uint32_t _app_bss_end;
+extern uint32_t _core_bss_end;
 
 
 static uint32_t *heap_start = NULL;

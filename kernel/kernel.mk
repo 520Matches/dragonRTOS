@@ -1,15 +1,7 @@
-C-FILES := $(wildcard $(KERNEL_DIR)/*.c)
+CORE-OBJS += kernel.o
+CORE-OBJS += interrupt.o
+CORE-OBJS += interrupts.o
 
-KERNEL-OBJS := 
-KERNEL-OBJS += kernel.o
-KERNEL-OBJS += interrupt.o
-KERNEL-OBJS += interrupts.o
-
-dragon_kernel.elf: $(KERNEL-OBJS)
-	$(LD) $(MAP_FLAGS) kernel.map -T $(KERNEL_DIR)/kernel_linker.ld -o $@ $^
-	$(OBJDUMP) -d $@ > dragon_kernel.asm
-	mv *.o $(BUILD_DIR)
-	mv *.map $(BUILD_DIR)
 
 kernel.o: $(KERNEL_DIR)/kernel.c
 	$(GCC) -c $(KERNEL_CFLAGS) $<

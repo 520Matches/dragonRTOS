@@ -100,5 +100,5 @@ trap_entry:
 
 	csrrw sp, sscratch, sp
 
-	sret
+	mret
 #endif

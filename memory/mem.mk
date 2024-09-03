@@ -1,8 +1,7 @@
 
 C-FILES := $(wildcard $(MEMORY_DIR)/*.c)
 
-MEMORY-OBJS := 
-MEMORY-OBJS += memory.o
+CORE-OBJS += memory.o
 
 
 memory.o: $(MEMORY_DIR)/memory.c

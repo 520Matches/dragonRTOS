@@ -2,13 +2,6 @@
 #include <dragon_memory.h>
 
 
-extern uint32_t _app_bss_end;
-
-static void os_init(void)
-{
-	mem_init();
-}
-
 typedef struct
 {
 	int a;
@@ -34,8 +27,6 @@ typedef struct
 void app_main(void)
 {
 	//set app stack
-	asm volatile("la sp, 0x80008000");
-	os_init();
 	test_t *tt  = (test_t*)memalloc(sizeof(test_t));
 	test2_t *tt2 = (test2_t*)memalloc(sizeof(test2_t));
 	test3_t *tt3 = (test3_t*)memalloc(sizeof(test3_t));

@@ -54,29 +54,7 @@ TARGET_DEBUG := dragon.elf
 
 OBJS-O := $(wildcard $(BUILD_DIR)/*.o)
 
-all: dragon_boot.bin dragon_app.bin dragon_kernel.bin
-	rm -rf $(TARGET)
-	@# create zero bin
-	dd if=/dev/zero of=$(TARGET) bs=1k count=$(DRAGON_SIZE)
-	cat dragon_boot.bin > $(TARGET)
-	cat dragon_kernel.bin | dd bs=1k seek=$(BOOT_SIZE) conv=notrunc of=$(TARGET)
-	cp $(TARGET) dragon_kernel_debug.bin
-	cat dragon_app.bin | dd bs=1k seek=$(KERNEL_SIZE) conv=notrunc of=$(TARGET)
-
-dragon_boot.bin   : dragon_boot.elf
-	$(OBJCOPY) -O binary $< $@
-	mv *.asm $(BUILD_DIR)
-dragon_kernel.bin : dragon_kernel.elf
-	$(OBJCOPY) -O binary $< $@
-	mv *.asm $(BUILD_DIR)
-dragon_app.bin    : dragon_app.elf
-	$(OBJCOPY) -O binary $< $@
-	mv *.asm $(BUILD_DIR)
-
-menuconfig:
-	menuconfig
-	python3 $(SCRIPTS_DIR)/kconfig.py
-	mv dragon_config.h ./include
+CORE-OBJS :=
 
 include $(OBJ_DIR)/arch/arch.mk
 include $(OBJ_DIR)/kernel/kernel.mk
@@ -85,6 +63,33 @@ include $(OBJ_DIR)/memory/mem.mk
 include $(OBJ_DIR)/task/task.mk
 
 include $(OBJ_DIR)/apps/apps.mk
+
+all: dragon_boot.bin dragon_core.bin
+	rm -rf $(TARGET)
+	@# create zero bin
+	dd if=/dev/zero of=$(TARGET) bs=1k count=$(DRAGON_SIZE)
+	cat dragon_boot.bin > $(TARGET)
+	cat dragon_core.bin | dd bs=1k seek=$(BOOT_SIZE) conv=notrunc of=$(TARGET)
+
+dragon_boot.bin   : dragon_boot.elf
+	$(OBJCOPY) -O binary $< $@
+	mv *.asm $(BUILD_DIR)
+
+dragon_core.bin    : dragon_core.elf
+	$(OBJCOPY) -O binary $< $@
+	mv *.asm $(BUILD_DIR)
+
+dragon_core.elf: $(CORE-OBJS)
+	$(LD) $(MAP_FLAGS) dragon_core.map -T dragon_core_linker.ld -o $@ $^
+	$(OBJDUMP) -d $@ > dragon_core.asm
+	mv *.o $(BUILD_DIR)
+	mv *.map $(BUILD_DIR)
+
+menuconfig:
+	menuconfig
+	python3 $(SCRIPTS_DIR)/kconfig.py
+	mv dragon_config.h ./include
+
 
 clean: bootclean kernelclean
 	rm -rf $(BUILD_DIR)/*.o
