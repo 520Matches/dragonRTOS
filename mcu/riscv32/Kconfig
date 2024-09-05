@@ -3,6 +3,8 @@ choice
 	help
 		"select one mcu"
 
+	config SIFIVE_E31
+	bool "sifive_e31"
 	config QEMU_VIR32
 	bool "qemu_vir32"
 	config QEMU_VIR_TEST

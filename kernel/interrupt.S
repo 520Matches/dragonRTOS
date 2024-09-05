@@ -9,7 +9,7 @@ trap_entry:
 	当trap触发的时候，sscratch里面存储了S模式的栈指针(sp)
 	这里是把U模式的sp和S模式的sp交换一下
 	*/
-	csrrw sp, sscratch, sp
+	/* csrrw sp, sscratch, sp */
 	/* 34个寄存器 */
 	addi sp, sp, -34
 
@@ -46,25 +46,25 @@ trap_entry:
 	sw x30, 30 * POINT_LEN(sp)
 	sw x31, 31 * POINT_LEN(sp)
 
-	csrr t0, sstatus
+	csrr t0, mstatus
 	sw t0, 32 * POINT_LEN(sp)
-	csrr t0, sepc
+	csrr t0, mepc
 	sw t0, 33 * POINT_LEN(sp)
-	csrr t0, scause
+	csrr t0, mcause
 	sw t0, 34 * POINT_LEN(sp)
 
 	/* 当产生中断的时候，中断类型码存放再scause或者mcause下 */	
-	csrr a0, scause
+	csrr a0, mcause
 	mv a1, sp
 
 	jal trap_handle
 
 	lw t0, 34 * POINT_LEN(sp)
-	csrw scause, t0
+	csrw mcause, t0
 	lw t0, 33 * POINT_LEN(sp)
-	csrw sepc, t0
+	csrw mepc, t0
 	lw t0, 32 * POINT_LEN(sp)
-	csrw sstatus, t0
+	csrw mstatus, t0
 
 	lw x1, 1 * POINT_LEN(sp)
 	lw x2, 2 * POINT_LEN(sp)
@@ -98,7 +98,7 @@ trap_entry:
 	lw x30, 30 * POINT_LEN(sp)
 	lw x31, 31 * POINT_LEN(sp)
 
-	csrrw sp, sscratch, sp
+	/* csrrw sp, sscratch, sp */
 
 	mret
 #endif

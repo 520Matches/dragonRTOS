@@ -5,12 +5,11 @@
 #include <archs.h>
 
 #include <dragon_memory.h>
+#include <systick.h>
 #include <uart.h>
 
 // #define __AT_KERNEL_ADDR __attribute__ ((__section__(".ARM.__at_0x80002000")))
 
-#define SYS_CLOCK
-#define SYS_TICK
 
 extern uint32_t _core_bss_begin;
 extern uint32_t _core_bss_end;
@@ -91,6 +90,9 @@ __NO_OPTIMIZE void start_kernel(void)
 
 	mem_init();
 
+	systick_init();
+
+	while(1);
 	app_main();
 
 	// 保存S模式下的sp

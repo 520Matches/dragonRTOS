@@ -12,7 +12,7 @@ pip3 install kconfiglib
 ## Build
 ```shell
 make menuconfig
-make -j$(nproc)
+make all
 ```
 
 ## Debug
@@ -30,27 +30,14 @@ b _start
 c
 ```
 
-### debug kernel
+### debug core app
 - open first terminal
 ```shell
-qemu-system-riscv32 -nographic -machine virt -bios dragon_boot.bin -kernel dragon_kernel.elf -s -S 
+qemu-system-riscv32 -nographic -machine virt -bios dragon_boot.bin -kernel dragon_core.elf -s -S 
 ```
 - open second terminal
 ```shell
-riscv32-unknown-elf-gdb dragon_kernel.elf
-target remote localhost:1234
-b start_kernel
-c
-```
-
-### debug app
-- open first terminal
-```shell
-qemu-system-riscv32 -nographic -machine virt -bios dragon_kernel_debug.bin -kernel dragon_app.elf -s -S 
-```
-- open second terminal
-```shell
-riscv32-unknown-elf-gdb dragon_app.elf
+riscv32-unknown-elf-gdb dragon_core.elf
 target remote localhost:1234
 b app_main
 c

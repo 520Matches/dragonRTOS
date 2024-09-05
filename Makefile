@@ -30,7 +30,7 @@ APP_SIZE    :=
 KERNEL_APP_SIZE := 24
 DRAGON_SIZE     := 40
 
-INC := -I ./include/ -I ./kernel/ -I ./platform/ -I ./common/ -I ./memory/ -I ./task/
+INC := -I ./include/ -I ./kernel/ -I ./platform/ -I ./common/ -I ./memory/ -I ./task/ -I ./mcu/
 
 # CFLAGS_DEBUG   := $(CFLAGS) -O0 -g
 # CFLAGS_RELEASE := $(CFLAGS) -O2
