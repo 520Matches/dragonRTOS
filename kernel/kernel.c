@@ -73,6 +73,8 @@ static inline void trap_init(void)
 
 __NO_OPTIMIZE void start_kernel(void)
 {
+	// close interrupt
+	write_csr(mie, 0);
 	/* init kernel stack */
 	/* kernel end in 0x4000 */
 	stack_init();
@@ -92,8 +94,14 @@ __NO_OPTIMIZE void start_kernel(void)
 
 	systick_init();
 
-	while(1);
-	app_main();
+	//开启中断
+	write_csr(mie, 1);
+
+	while(1)
+	{
+		asm volatile("wfi");
+	}
+	// app_main();
 
 	// 保存S模式下的sp
 	// asm volatile("csrw sscratch, sp");

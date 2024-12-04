@@ -6,9 +6,7 @@
 #include <archs.h>
 
 #if(ARCH == ARCH_RISCV32)
-#if(SIFIVE_E31 == 1)
-	#include "./riscv32/sifive_e31/clint.h"
-#endif
+	#include "./riscv32/clint.h"
 #endif
 
 #endif

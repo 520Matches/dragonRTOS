@@ -5,6 +5,7 @@ ARCHS := arm32 arm64 riscv32 riscv64
 
 ARCH ?= riscv32
 MCU  ?= qemu_vir32
+# MCU  ?= sifive_e31
 
 GCC     := $(CROSS_COMPILE)gcc
 LD      := $(CROSS_COMPILE)ld
