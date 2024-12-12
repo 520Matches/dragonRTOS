@@ -24,6 +24,15 @@ typedef enum {
 	TASK_PRORITY_MAX = 15,
 }task_prority_t;
 
+typedef enum {
+	TASK_STATUS_DEAD = 0,
+	TASK_STATUS_READY = 1,
+	TASK_STATUS_RUNNING = 2,
+	TASK_STATUS_BLOCK = 3,
+	TASK_STATUS_STOP = 4,
+	TASK_STATUS_MAX = 5,
+}task_status_t;
+
 typedef struct {
 	//堆栈指针
 	uint32_t *stack;
@@ -31,9 +40,11 @@ typedef struct {
 	uint32_t stack_size;
 	uint8_t prority;
 	task_func func;
+	void *args;
+	task_status_t status;
 }task_handle_t;
 
-task_handle_t* task_create(const char* const name, uint32_t stack_size, task_func entry, task_prority_t prority);
+task_handle_t* task_create(const char* const name, uint32_t stack_size, task_func entry, void *args, task_prority_t prority);
 
 
 #endif

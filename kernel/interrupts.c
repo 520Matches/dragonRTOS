@@ -20,6 +20,8 @@ void trap_handle(uint32_t mcause, uint32_t sp)
 		case M_SOFTWARE_INT:
 		break;
 		case M_TIMER_INT:
+			//TODO
+			//task switch
 		break;
 		case M_EXTERNAL_INT:
 		break;
