@@ -2,13 +2,14 @@ mainmenu "dragonRTOS Configuation"
 
 menu "General"
 	config ARCH
-		int "arch"
+		int "CONFIG ARCH riscv32 = 1, riscv64 = 2, arm32 = 3, arm64 = 4"
 		default 1
-		help 
+		range 1 4
+		help
 			riscv32 = 1, riscv64 = 2, arm32 = 3, arm64 = 4
 
-	config TOOL_CHAIN
-		string "tool chain path"
+	config CROSS_COMPILE
+		string "cross compile path"
 
 	source "arch/Kconfig"
 	source "platform/Kconfig"
@@ -20,6 +21,10 @@ endmenu
 
 menu "MCU"
 	source "mcu/Kconfig"
+endmenu
+
+menu "Memory"
+	source "memory/Kconfig"
 endmenu
 
 menu "App"

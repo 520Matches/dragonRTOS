@@ -1,7 +1,7 @@
 #ifndef __TASK_H
 #define __TASK_H
 
-#include <dragon_types.h>
+#include <stdint.h>
 
 typedef void (*task_func)(void *arg);
 
@@ -46,5 +46,6 @@ typedef struct {
 
 task_handle_t* task_create(const char* const name, uint32_t stack_size, task_func entry, void *args, task_prority_t prority);
 
+void task_timer_init(uint64_t interval);
 
 #endif

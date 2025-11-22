@@ -1,5 +1,6 @@
 #include <uart.h>
 #include <dragon_memory.h>
+#include <dragon_types.h>
 // #include <stdlib.h>
 
 #define UART_BASE        0x10000000

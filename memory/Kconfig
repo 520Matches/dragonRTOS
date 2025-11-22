@@ -1,0 +1,7 @@
+config STACK_SIZE
+hex "stack size"
+default 0x400
+
+# config HEAP_SIZE
+# hex "heap size default 4096"
+# default 0x1000

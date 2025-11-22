@@ -41,4 +41,8 @@
 			      : "memory");			\
 })
 
+
+#define set_csr(csr, val) ({ \
+    asm volatile ("csrs " #csr ", %0" :: "r"(val)); })
+
 #endif

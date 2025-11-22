@@ -1,0 +1,20 @@
+
+BOOT_DIR := $(ARCH_DIR)/boot
+
+C-FILES := $(wildcard $(BOOT_DIR)/*.c)
+ASM-FILES := $(wildcard $(BOOT_DIR)/*.S)
+
+BOOT-OBJS := 
+BOOT-OBJS += head.o
+
+dragon_boot.elf: $(BOOT-OBJS)
+	$(LD) $(MAP_FLAGS) boot.map -T $(BOOT_DIR)/boot_linker.ld -o $@ $^
+	$(OBJDUMP) -d $@ > dragon_boot.asm
+	mv *.o $(BUILD_DIR)
+	mv *.map $(BUILD_DIR)
+
+head.o: $(BOOT_DIR)/head.S
+	$(GCC) -c $(BOOT_CFLAGS) $<
+
+bootclean:
+	rm -rf $(BOOT_DIR)/*.o

@@ -1,7 +1,7 @@
 #ifndef __SYSCALL_H
 #define __SYSCALL_H
 
-#include <dragon_types.h>
+#include <stdint.h>
 
 typedef int (*dragon_write)(void *handle, uint8_t *data, uint32_t size);
 typedef int (*dragon_read)(void *handle, uint8_t *data, uint32_t size, uint32_t timeout);

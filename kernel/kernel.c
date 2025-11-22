@@ -1,20 +1,23 @@
-#include <dragon_types.h>
+#include <stdint.h>
 #include <irq.h>
 #include <register.h>
 #include <attributes.h>
 #include <archs.h>
+// #include <connect.h>
 
 #include <dragon_memory.h>
 #include <systick.h>
-#include <uart.h>
+#include <task.h>
 
 // #define __AT_KERNEL_ADDR __attribute__ ((__section__(".ARM.__at_0x80002000")))
 
 
-extern uint32_t _core_bss_begin;
-extern uint32_t _core_bss_end;
+extern uint32_t _sbss;
+extern uint32_t _ebss;
 
+#if(ARCH == ARCH_RISCV32)
 extern void trap_entry(void);
+#endif
 extern void app_main(void);
 
 // void test_main(void)
@@ -47,16 +50,26 @@ extern void app_main(void);
 static void core_bss_clear(void)
 {
 	uint32_t *p;
-	for(p = &_core_bss_begin; p <= &_core_bss_end;)
+	for(p = &_sbss; p <= &_ebss;)
 	{
 		*p++ = 0;
 	}
 }
 
+#define STACK_SIZE_STR TO_STR(STACK_SIZE)
+
 static inline void stack_init(void)
 {
 #if(ARCH == ARCH_RISCV32)
 	asm volatile("la sp, 0x80008000");
+#endif
+#if(ARCH == ARCH_ARM32)
+	 __asm__ volatile (
+        "ldr r0, =(" STACK_SIZE_STR ")\n"  // 加载栈大小
+        "ldr sp, = _estack\n"               // 加载初始栈顶
+        "sub sp, sp, r0\n"                 // 计算实际栈顶
+        "bx lr"
+    );
 #endif
 }
 
@@ -74,7 +87,7 @@ static inline void trap_init(void)
 __NO_OPTIMIZE void start_kernel(void)
 {
 	// close interrupt
-	write_csr(mie, 0);
+	disable_irq();
 	/* init kernel stack */
 	/* kernel end in 0x4000 */
 	stack_init();
@@ -88,18 +101,24 @@ __NO_OPTIMIZE void start_kernel(void)
 	val = INSERT_FIELD(val, SSTATUS_SPIE, 0);
 	write_csr(sstatus, val);
 */
+#if(ARCH == ARCH_RISCV32)
 	trap_init();
+#endif
 
-	mem_init();
+	// heap_init();
 
-	systick_init();
+	// task_timer_init(1000);
 
+	// systick_init();
+	
 	//开启中断
-	write_csr(mie, 1);
+	enable_irq();
 
 	while(1)
 	{
-		asm volatile("wfi");
+
+		// heap_init();
+		// asm volatile("wfi");
 	}
 	// app_main();
 

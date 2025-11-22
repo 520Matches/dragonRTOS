@@ -1,13 +1,11 @@
-menu "KernelConfig"
-	config KERNEL_START_ADDR
-	hex "kernel start address"
-	default 0x80002000
+config KERNEL_START_ADDR
+hex "kernel start address"
+default 0x80002000
 
-	config KERNEL_LEN
-	hex "kernel length"
-	default 0x2000
+config KERNEL_LEN
+hex "kernel length"
+default 0x2000
 
-	config KERNEL_STACK_LEN
-	hex "kernel stack length"
-	default 0x400
-endmenu
+config KERNEL_STACK_LEN
+hex "kernel stack length"
+default 0x400

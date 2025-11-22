@@ -11,6 +11,7 @@ pip3 install kconfiglib
 ```
 ## Build
 ```shell
+source export_env.sh
 make menuconfig
 make all
 ```

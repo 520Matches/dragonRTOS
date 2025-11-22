@@ -1,15 +1,14 @@
 #include <systick.h>
 #include <archs.h>
-#include <dragon_types.h>
+#include <stdint.h>
 #include <register.h>
 
 #include <mcu.h>
 
 
 #define SYS_CLOCK	((uint32_t)(8000000)) //8M
-#define SYS_TICK	(1)	//1ms
+#define SYS_TICK	(1000)	//1s
 							
-
 uint64_t sys_tick = 0;
 
 void systick_init(void)

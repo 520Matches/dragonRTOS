@@ -1,0 +1,10 @@
+choice
+	prompt "MCU"
+	help
+		"select one mcu"
+
+	config STM32F103
+	bool "stm32f103"
+	config STM32F407
+	bool "stm32f407"
+endchoice

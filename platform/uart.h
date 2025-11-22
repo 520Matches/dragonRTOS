@@ -1,7 +1,7 @@
 #ifndef __UART_H
 #define __UART_H
 
-#include <dragon_types.h>
+#include <stdint.h>
 #include <dragon_error.h>
 #include <syscall.h>
 

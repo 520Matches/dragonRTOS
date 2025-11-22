@@ -2,7 +2,8 @@
 #define __MEMORY_H
 
 
-#include <dragon_types.h>
+#include <stdint.h>
+
 
 #define dmb()		__asm__ __volatile__ ("" : : : "memory")
 
@@ -35,7 +36,5 @@
 
 
 
-void mem_init(void);
-void* memalloc(uint32_t size);
 
 #endif

@@ -1,7 +1,1 @@
-menu "Riscv32"
-	source "mcu/riscv32/Kconfig"
-endmenu
-
-menu "Arm32"
-	
-endmenu
+source "mcu/$(ARCH)/Kconfig"
